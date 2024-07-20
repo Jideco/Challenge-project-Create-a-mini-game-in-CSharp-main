@@ -71,6 +71,13 @@ void Move()
 {
     int lastX = playerX;
     int lastY = playerY;
+
+    if (TerminalResized())
+    {
+        Console.Clear();
+        Console.Write("Console was resized. Program exiting.");
+        shouldExit = true;
+    }
     
     switch (Console.ReadKey(true).Key) 
     {
@@ -89,6 +96,7 @@ void Move()
 		case ConsoleKey.Escape:     
             shouldExit = true; 
             break;
+        
     }
 
     // Clear the characters at the previous position
