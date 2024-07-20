@@ -6,6 +6,8 @@ int height = Console.WindowHeight - 1;
 int width = Console.WindowWidth - 5;
 bool shouldExit = false;
 
+int speed = 1;
+
 // Console position of the player
 int playerX = 0;
 int playerY = 0;
@@ -67,7 +69,7 @@ void FreezePlayer()
 }
 
 // Reads directional input from the Console and moves the player
-void Move() 
+void Move( ) 
 {
     int lastX = playerX;
     int lastY = playerY;
@@ -79,6 +81,8 @@ void Move()
         shouldExit = true;
     }
     
+    SpeedMovement();
+
     switch (Console.ReadKey(true).Key) 
     {
         case ConsoleKey.UpArrow:
@@ -88,10 +92,10 @@ void Move()
             playerY++; 
             break;
 		case ConsoleKey.LeftArrow:  
-            playerX--; 
+            playerX -= speed; 
             break;
 		case ConsoleKey.RightArrow: 
-            playerX++; 
+            playerX += speed; 
             break;
 		case ConsoleKey.Escape:     
             shouldExit = true; 
@@ -119,8 +123,6 @@ void Move()
     Console.WriteLine(player);
 
     ConsumeFood();
-    //ShowFood();
-    Console.Write(player);
 
 
 }
@@ -134,13 +136,35 @@ void InitializeGame()
     Console.Write(player);
 }
 
-void ConsumeFood () 
+bool ConsumeFood () 
 {
     if (playerX == foodX && playerY == foodY)
     {
-        player = states[food];
+        ChangePlayer();
 
         ShowFood();
-    }
 
+        return true;
+    }
+    return false;
+}
+
+void SpeedMovement () 
+{
+    if (ConsumeFood())
+    {
+        if (player == "(X_X)")
+        {
+            FreezePlayer();
+        }
+        else if (player == "(^-^)")
+        {
+            speed = 3;
+        }
+        else
+        {
+            speed = 1;
+        }
+    
+    }
 }
