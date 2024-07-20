@@ -96,6 +96,9 @@ void Move()
 		case ConsoleKey.Escape:     
             shouldExit = true; 
             break;
+        default:
+            shouldExit = true;
+            break;
         
     }
 
@@ -112,7 +115,14 @@ void Move()
 
     // Draw the player at the new location
     Console.SetCursorPosition(playerX, playerY);
+
+    Console.WriteLine(player);
+
+    ConsumeFood();
+    //ShowFood();
     Console.Write(player);
+
+
 }
 
 // Clears the console, displays the food and player
@@ -122,4 +132,15 @@ void InitializeGame()
     ShowFood();
     Console.SetCursorPosition(0, 0);
     Console.Write(player);
+}
+
+void ConsumeFood () 
+{
+    if (playerX == foodX && playerY == foodY)
+    {
+        player = states[food];
+
+        ShowFood();
+    }
+
 }
